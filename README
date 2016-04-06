@@ -1,0 +1,36 @@
+DYNAMIC LIBRARY
+1.generate a dynamic library
+  for example:
+the code is in display.c file
+#include <stdio.h>
+
+void display()
+{
+    printf("hello world\n");
+    return;
+}
+run the following command to generate dynamic library
+gcc -fPIC -shared display.c -o libdisplay.so
+now, you will found a libdisplay.so file that is dynaimic library in curren directory.
+
+2.how to use this dynaminc library
+  we need provide a test program that is in main.c file.
+  the detail of code, please read main.c file.
+  run following command to compile test program.
+gcc -rdynamic -o main main.c -ldl # dl is dynamic library for load dynamic library.
+
+others:
+#include <dlfcn.h>
+The function dlopen() loads the dynamic library file named by the null-terminated string filename and returns an opaque "handle" for the dynamic library.
+void *dlopen(const char *filename, int flag);
+returns a human readable string describing the most recent error that occurred from dlopen(), dlsym() or dlclose() since the last call to dlerror().
+char *dlerror(void);
+function dlsym() takes a "handle" of a dynamic library returned by dlopen() and the null-terminated symbol name, returning the address where that symbol is loaded into mem?
+ory.
+void *dlsym(void *handle, const char *symbol);
+The function dlclose() decrements the reference count on the dynamic library handle handle. If the reference count drops to zero and no other loaded libraries use symbols in
+it, then the dynamic library is unloaded.
+int dlclose(void *handle);
+
+Link with -ldl.
+the detail of loading dynamic library, please man dlopen.
